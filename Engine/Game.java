@@ -6,27 +6,37 @@ package Engine;
 public class Game {
 
     boolean gameOver = false;
-    Game(){
+    Player user;
+    Player computer;
 
+    public Game(){
+        user = new Player();
+        computer = new ComputerPlayer();
     }
     public void startGame(){
-
+        System.out.println("Battle Ship");
+        System.out.println("User                   Computer");
     }
 
-    public void printGameState( Player player1, Player player2 ){
+    public void printGameState(){
         for( int i = 0; i < 8 ; i++){
-            printRow(player1);
+            printRow(user, i);
             System.out.print(" | ");
-            printRow(player2);
+            printRow(computer,i);
             System.out.println();
 
         }
     }
 
-    public void printRow( Player player ){
+    public void printRow( Player player, int rowIndex ){
+        StringBuilder temp = new StringBuilder();
+        String result;
         for( int i = 0; i < 8 ; i++){
-            System.out.print(player.representation_board[i] + " ");
+            temp.append( player.representation_board[rowIndex][i] + " ");
         }
+        result = temp.toString();
+        System.out.print(result);
+
     }
 
 

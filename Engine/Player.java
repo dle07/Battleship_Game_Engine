@@ -16,12 +16,16 @@ public class Player {
 
     Player(){
         representation_board = new Character[8][8];
+        for (int i = 0; i < 8; i++) {
+            Arrays.fill(representation_board[i],'~');
+        }
         
     }
 
     public void generateRandomBoard(){
 
     }
+    
 
     public boolean isGameOver(){
         return this.gameOver;
