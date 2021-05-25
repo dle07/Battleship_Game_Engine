@@ -1,11 +1,26 @@
 package Engine;
 
-    public class Main{
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Main{
         
         public static void main( String args[] ){
-            for( Ships el: Ships.values()){
-                System.out.println(el);
-            }
+            ArrayList<Integer>   temp  =  new ArrayList<Integer>(Collections.nCopies(8, 0)); 
+
+            System.out.println(temp);
+            
+            /*
+            Game game = new Game();
+            game.printGameState();
+    
+
+            
+            Board myBoard = new Board();
+            myBoard.generateRandomBoard();
+            */
+            
+
         }
 
     }

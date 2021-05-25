@@ -38,8 +38,20 @@ public class Game {
     public void printRow( Player player, int rowIndex ){
         StringBuilder temp = new StringBuilder();
         String result;
+        Integer currentInt;
         for( int i = 0; i < 8 ; i++){
-            temp.append( player.board.representation_board[rowIndex][i] + " ");
+            currentInt = player.player_board.board.get(rowIndex).get(i);
+            
+            if(currentInt.equals(-1)){
+                temp.append("O ") ; 
+            }
+            else if( currentInt.equals(0)){
+                temp.append("~ ") ;
+            }
+            else{
+                temp.append("X ");
+            }
+            
         }
         result = temp.toString();
         System.out.print(result);

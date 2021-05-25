@@ -1,41 +1,74 @@
 package Engine;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class Board {
-    protected Character[][] representation_board;     // This board will be the representational board
-    protected int[][] actual_space;                   // This board represents the actual playing space.
-    protected boolean[][] visited;                    // -1 ~ Represents missed hit
 
-    Random rand;
+    
+    protected ArrayList<ArrayList<Integer>>    board;                  // This board represents the actual playing space.
+    protected boolean[][]                      visited;                //
+
+    protected static Random rand = new Random();
+    int x;
+    int y;
 
     public Board(){
-        rand = new Random();
+
+        board = new ArrayList<ArrayList<Integer>>(8);                   
+        visited = new boolean[8][8];                                    // Initally set to false, no need to continue
+
+        for( int i = 0; i < 8; i++){
+            ArrayList<Integer>   temp  =  new ArrayList<Integer>(Collections.nCopies(8, 0)); 
+            System.out.println("Adding");
+            Collections.fill(temp,  Integer.valueOf(0));
+            for( var el: temp){
+                System.out.println(el);
+            }
+            this.board.add(temp);
+        }
+        
     };
 
+    protected boolean isValidLocation( int x, int y){
+        //TODO....
+        return false;
+    }
+   
 
     public void generateRandomBoard(){
-
         for( Ships ship: Ships.values()){
             this.placeShipRandomly(ship);
         }
-    
     }
 
     private void placeShipRandomly(Ships shipType){
-        if(shipType == Ships.DESTROYER){                // length of 2
+        
+        boolean placed = false;
+        int length;
 
-            
-            
-        }else if( shipType.equals(Ships.CRUISER)){      // length of 3
-
-
-
-
-        }else{
-
-
+        switch(shipType){
+            case DESTROYER: length = 2;
+            case CRUISER: length =3;
+            default: length = 4;
+        }
+        
+        while( !placed ){
+            this.generateRandomCordinates();
 
         }
     }
+
+
+
+
+
+    private void generateRandomCordinates(){
+        this.x = rand.nextInt(8);
+        this.y = rand.nextInt(8);
+    }
+
 };

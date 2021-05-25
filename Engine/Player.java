@@ -10,14 +10,10 @@ public class Player {
     
     private boolean gameOver = false;
     
-    protected Board board;
+    protected Board player_board;
     
     Player(){
-        board = new Board();
-        board.representation_board = new Character[8][8];
-        for (int i = 0; i < 8; i++) {
-            Arrays.fill(board.representation_board[i],'~');
-        }
+        player_board = new Board();
 
         
     }
