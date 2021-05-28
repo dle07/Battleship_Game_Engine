@@ -10,17 +10,21 @@ public class Board {
 
     
     protected ArrayList<ArrayList<Integer>>    board;                  // This board represents the actual playing space.
+    protected boolean[][]                      hiddenShipsBoard;            // Used to represent Where our ships are really hidden
     protected boolean[][]                      visited;                //
 
     protected static Random rand = new Random();
     int x;
     int y;
 
-    public Board(){
+    public Board(int boardLength, int boardWidth){
 
-        board = new ArrayList<ArrayList<Integer>>(8);                   
-        visited = new boolean[8][8];                                    // Initally set to false, no need to continue
+        board = new ArrayList<> ();          
 
+        visited = new boolean[boardLength][boardWidth];                                    // Initally set to false, no need to continue
+        hiddenShipsBoard = new boolean[boardLength][boardWidth]; 
+
+        
         for( int i = 0; i < 8; i++){
             ArrayList<Integer>   temp  =  new ArrayList<Integer>(Collections.nCopies(8, 0)); 
             System.out.println("Adding");

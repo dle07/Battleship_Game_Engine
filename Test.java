@@ -10,6 +10,35 @@ public class Test {
         BATTLESHIP
     };
     public static void main( String[] args){
+        String example = "Hello there how are you";
+        String[] temp;
+        temp = example.split(" ");
+        /*
+        String temp = "gello";
+        System.out.println(String.class);
+        if(temp.getClass().equals(String.class)){
+            System.out.println("Yes");
+        }else{
+            System.out.println("No");
+        }
+        Object myObject = "Hello";
+        System.out.println(myObject);
+        var temp1 = myObject;
+        System.out.println(temp1.getClass());
+        /*
+        Object[] myObjects = new Object[2];
+        myObjects[0] = "Hello";
+        myObjects[1] = 2;
+
+        String temp = (String)(myObjects[0]);
+        int tempInt = (int) myObjects[1];
+        System.out.println(temp + "    " + tempInt);
+        System.out.println(myObjects[0] + "    " + myObjects[1]);
+        System.out.println(myObjects[0].getClass());
+        System.out.println(myObjects[1].getClass());
+        System.out.println(String.class);
+        
+        /*
 
         ArrayList<ArrayList<Integer>>    board;
         board = new ArrayList<ArrayList<Integer>>(8);

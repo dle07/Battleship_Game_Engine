@@ -12,14 +12,18 @@ public class Player {
     
     protected Board player_board;
     
-    Player(){
+    
+    Player(int boardLength, int boardWidth){
         player_board = new Board();
+    
 
         
     }
 
     
-
+    protected void shoot(int row, int col){
+        
+    }
     public boolean isGameOver(){
         return this.gameOver;
     }
