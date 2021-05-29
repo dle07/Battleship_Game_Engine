@@ -13,17 +13,19 @@ public class Player {
     protected Board player_board;
     
     
-    Player(int boardLength, int boardWidth){
-        player_board = new Board();
+    public Player(int boardLength, int boardWidth){
+        player_board = new Board(boardLength,boardWidth);
     
 
-        
     }
-
+    
     
     protected void shoot(int row, int col){
-        
+        player_board.visited[row][col] = true;
+
+
     }
+
     public boolean isGameOver(){
         return this.gameOver;
     }

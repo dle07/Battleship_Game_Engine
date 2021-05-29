@@ -10,6 +10,10 @@ public class Test {
         BATTLESHIP
     };
     public static void main( String[] args){
+        String temp = "hello";
+        System.out.println(temp.toString());
+
+        /*
         String example = "Hello there how are you";
         String[] temp;
         temp = example.split(" ");

@@ -7,4 +7,4 @@ package Engine;
     Cruiser             3
     Battleship          4
 */
-public enum Ships { DESTROYER, CRUISER, BATTLESHIP };
+enum Ships { DESTROYER, CRUISER, BATTLESHIP };
