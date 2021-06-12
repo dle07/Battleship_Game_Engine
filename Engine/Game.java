@@ -2,6 +2,8 @@ package Engine;
 
 import java.util.Scanner;
 
+import jdk.jfr.ValueDescriptor;
+
 
 
 /*
@@ -14,10 +16,12 @@ public class Game {
     boolean gameOver = false;
     Player user;
     ComputerPlayer computer;
-    int boardLength = 5;
-    int boardWidth  = 5;
+    static int boardLength = 5;
+    static int boardWidth  = 5;
     String headerString;
+    boolean playAgain = true;
     Scanner sc = new Scanner(System.in);
+    
 
     public Game(){
         initialize_game();
@@ -29,7 +33,7 @@ public class Game {
         
     }
     
-    private int[] getCordinates(){
+    private int[] getCordinates(Player target){
         boolean areValidCordiantes = false;
         int[] result = new int[2];
         System.out.println("Enter 2 space seperated numbers representing target cell in format <row> <column>, Ex: 1 3");
@@ -40,15 +44,18 @@ public class Game {
             try {
 
                 inputLine = sc.nextLine();
-                values = inputLine.split(" ");
+                values = inputLine.trim().split("\\s+");
                 result[0] = Integer.parseInt(values[0]);
                 result[1] = Integer.parseInt(values[1]);
-                if(!validCordinates(result[0], result[1])){
+                for( String value : values){
+                    System.out.println(value);
+                }
+                if(!validCordinates(result[0], result[1],target)){
                     throw new IllegalArgumentException("Invalid Cordiantes, try again... ");
                 }
                 areValidCordiantes = true;
             } catch (Exception e) {
-                printGameHeaders();
+                System.out.println(e);
                 printGameState();
             }
 
@@ -57,37 +64,69 @@ public class Game {
         return result;
 
     };
-    private boolean validCordinates(int row, int col){
-        if( row < 0 || row >= boardLength || col < 0 || col >= boardWidth || user.player_board.visited[row][col] ){
+    private boolean validCordinates(int row, int col, Player target){
+        if( row < 0 || row >= target.player_board.boardLength || col < 0 || col >= target.player_board.boardWidth || target.player_board.visited[row][col] ){
             return false;
         }
         return true;
     }
     
-    
-    public void printGameHeaders(){
-        
-        
-    }
+
 
     public void startGame(){
         boolean isPlayerTurn = true;
-        while( !user.isGameOver() && ! computer.isGameOver()){
+        while( playAgain ) {
             
-            int[] cordinates = getCordinates();
-            user.shoot( cordinates[0] ,cordinates[1] );
-            if(computer.isGameOver()){
+            while( !checkIfLost(user) && !checkIfLost(computer)){
+
+                printGameState();
+                int[] cordinates = getCordinates(user);
+                user.shoot( cordinates[0] ,cordinates[1], computer );   //User's turn to shoot
+                if(checkIfLost(computer)){
+                    System.out.println("You have won!!!");
+                    break;
+                }
+                computer.shoot(user);                                       //Computer shoots
+                if( checkIfLost(user)){
+                    System.out.println("You have been defeated!!!");
+                    break;
+                }
                 
             }
-            computer.shoot();
-            
+            playAgainPrompt();
+            if(playAgain){
+                resetGameState();
+            }
+
         }
+        
     }
+    protected void playAgainPrompt(){
+        System.out.println("\n\nWould you like to play again? (y/n)");
+        boolean validInput = false;   //Assume it's not a valid input
+
+        String inputChoice = sc.nextLine();
+        inputChoice = inputChoice.toLowerCase();
+
+        do{
+            
+            if( inputChoice.equals("y") || inputChoice.equals("yes") ){
+                validInput = true;
+            }else if( inputChoice.equals("n") || inputChoice.equals("no")){
+                validInput = true;
+                playAgain = false;
+            }else{
+                System.out.println("Invalid input...\n Please input \"yes\" or \"y\" to play again or \"no\" or \"n\" to exit");
+                inputChoice = sc.nextLine();
+            }
+        }while( !validInput );
+
+    }
+    
 
 
     public void initialize_game(){
-        boolean validInput = true;
-        Scanner sc = new Scanner(System.in);
+        boolean validInput = false;
 
         System.out.println("Default Board length is 5x5");
         System.out.println("Board can exceed 5x5 dimension\n" + "Do you wish to customize length? (y/n)");
@@ -96,16 +135,17 @@ public class Game {
         inputChoice = inputChoice.toLowerCase();
 
         do{
-            validInput = false;
+            
             if( inputChoice.equals("y") || inputChoice.equals("yes") ){
                 this.customizeGame(sc);
-                validInput = false;
+                validInput = true;
             }else if( inputChoice.equals("n") || inputChoice.equals("no")){
+                validInput = true;
             }else{
                 System.out.println("Invalid input...\n Please input \"yes\" or \"y\" to set board dimensions or \"no\" or \"n\" to use default 5x5 dimension ");
                 inputChoice = sc.nextLine();
             }
-        }while( validInput == true );
+        }while( !validInput  );
         
     }
 
@@ -199,4 +239,34 @@ public class Game {
 
     }
 
+    protected boolean checkIfLost(Player target){
+        for( int i = 0; i < boardLength; i++){
+            for( int j = 0; j < boardWidth; j++){
+                if( target.player_board.hiddenShipsBoard[i][j]){
+                    if( !target.player_board.board.get(i).get(j).equals(1)) return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+
+    protected void resetGameState(){
+        for( int i = 0; i < boardLength; i++){
+            for( int j = 0; j < boardWidth; j++){
+                user.player_board.board.get(i).set(j,0);
+                user.player_board.visited[i][j] = false;
+                
+                computer.player_board.board.get(i).set(j,0);
+                computer.player_board.visited[i][j] = false;
+            }
+        }
+    }
+
+
+    static protected boolean inBounds(int row, int col){
+        if( row < 0 || row >= boardLength || col < 0 || col >= boardWidth ) return false;
+        return true;
+    }
 }

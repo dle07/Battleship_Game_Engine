@@ -8,9 +8,9 @@ import java.util.Arrays;
 */
 public class Player {
     
-    private boolean gameOver = false;
     
     protected Board player_board;
+
     
     
     public Player(int boardLength, int boardWidth){
@@ -20,16 +20,21 @@ public class Player {
     }
     
     
-    protected void shoot(int row, int col){
+    protected void shoot(int row, int col, Player target){
         player_board.visited[row][col] = true;
+        if( sucessfulHit(row, col, target)){
+            target.player_board.board.get(row).set(col, 1);         // 1 for sucessful hit
+        }else{  
+            target.player_board.board.get(row).set(col,-1);         // -1 for unsucessful hit
+        }
 
 
     }
-
-    public boolean isGameOver(){
-        return this.gameOver;
+    boolean sucessfulHit(int row, int col, Player target){
+        return target.player_board.hiddenShipsBoard[row][col];
     }
 
+    
 
 
 }

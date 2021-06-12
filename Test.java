@@ -1,4 +1,11 @@
 import java.util.Random;
+import java.util.Scanner;
+
+import javax.swing.text.StyledEditorKit.BoldAction;
+
+import Engine.Board;
+
+
 import java.util.ArrayList;
 import java.util.Collections;
 //import Engine.*;
@@ -10,6 +17,63 @@ public class Test {
         BATTLESHIP
     };
     public static void main( String[] args){
+        Scanner inputScanner = new Scanner(System.in);
+        Scanner stream = new Scanner(System.in);
+        String temp = "   gggggggg   ggggg ggggg   gggg   ";
+        temp.trim();
+        String[] tempStrings = temp.split("\\s+");
+        for( String el : tempStrings){
+            System.out.println(el.length());
+            System.out.println(el);
+        }
+
+        /*
+        boolean[][] temp = new boolean[5][5];
+
+        for( var row : temp){
+            for (var elem : row){
+                System.out.print(elem + " ");
+            }
+            System.out.println();
+        }
+
+        /*
+        try {
+            if( temp ==5){
+                throw new IllegalArgumentException("Wrong ......");
+            }
+            System.out.println("Hello");
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+
+        /*
+        Board myBoard = new Board(5,5);
+        myBoard.printHiddenBoard();
+        /*
+        int[] temp  = new int[6];
+        temp[3] = 3;
+        for( var el: temp){
+            System.out.println(el);
+        }
+
+        /*
+        Boolean temp = false;
+        if( temp ==false){
+            System.out.println("helkdlskdkasda");
+        }
+
+        /*
+        ArrayList<ArrayList<Integer>>    board = new ArrayList<>();                  // This board represents the actual playing space.
+        for( int i= 0; i < 5; i++){
+            ArrayList<Integer> temp = new ArrayList<Integer>(Collections.nCopies(5, 0));
+            board.add(temp);
+        }
+        board.get(0).set(0, 100);
+        System.out.println(board.toString());
+        
+        /*
         String temp = "hello";
         System.out.println(temp.toString());
 
